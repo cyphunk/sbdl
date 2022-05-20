@@ -30,6 +30,12 @@ systems but authors describing multi-memory systems may wish to trade
 portability for additional clarity by using ``nand/nor/emmc/usb`` to describe
 memory locations.
 
+## Important
+
+This generalization language might obscure important details. For example missing 
+are  authentication modes and mac functions. Hopefully readers that find these 
+details important could help organize this language to suite their those needs.
+
 ## Use 
 
 Here is a simple example showing 1 boot stage, a system kernel, filesystem,
