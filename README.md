@@ -45,7 +45,7 @@ product applications and then an untrusted configuration partition.
 These are secured using cryptographic authentication that depend on keys 
 stored internally to the CPU.
 
-**chainoftrust_encrypted_simple.sbdl**
+**chainoftrust_verified_simple.sbdl**
 
         boot1 = cpu:rom://boot1
        kernel = boot1:verify(cpu:otp://key, flash://kernel_sign)
