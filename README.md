@@ -33,9 +33,9 @@ memory locations.
 ## Important
 
 This generalization language might obscure important details. For example missing 
-are authentication modes and mac functions. Additionally a glaring omission in 
+are authentication modes and mac functions. Additionally a glaring omission 
 is lack of effective representation for design flaws that occur when decryption 
-is assumed to equal authentication. Hopefully readers that find these details 
+is assumed to equal authentication (see [Practical malleability attack against CBC-Encrypted LUKS partitions](https://www.jakoblell.com/blog/2013/12/22/practical-malleability-attack-against-cbc-encrypted-luks-partitions/), [archive](./reference/guides/Practical%20malleability%20attack%20against%20CBC-Encrypted%20LUKS%20partitions%20|%20Jakob%20Lell's%20Blog.pdf)). Hopefully readers that find these details 
 important could help organize this language to better suite those needs.
 
 ## Use 
@@ -150,6 +150,8 @@ Note: Encryption may provide secrecy but without authentication it should not be
 ## Contributions
 
 Pull requests welcome.
+
+* Thank you Jennifer Guerke for discussing in-depth discussions on issues with encrypted only firmwares and to Jakob Lell for writing about exactly this issue through example (see links in intro).
 
 ## Disclaimer
 
