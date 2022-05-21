@@ -42,15 +42,15 @@ important could help organize this language to better suite those needs.
 
 Here is a simple example showing 1 boot stage, a system kernel, filesystem,
 product applications and then an untrusted configuration partition. 
-These are secured using encryption that depend on keys stored internally to the 
-CPU.
+These are secured using cryptographic authentication that depend on keys 
+stored internally to the CPU.
 
 **chainoftrust_encrypted_simple.sbdl**
 
         boot1 = cpu:rom://boot1
-       kernel = boot1:decrypt(cpu:otp://key, flash://kernel_enc)
-     keystore = kernel:decrypt(cpu:otp://key, flash://keystore_enc)
-      filesys = kernel:decrypt(keystore://key, flash://filesys_enc)
+       kernel = boot1:verify(cpu:otp://key, flash://kernel_sign)
+     keystore = kernel:verifydecrypt(cpu:otp://key, flash://keystore_encsign)
+      filesys = kernel:verify(keystore://key, flash://filesys_sign)
          apps = filesys://applications
     ^^^^^^^^^^^^ trusted ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     vvvvvvvvvvvv untrusted vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -66,14 +66,14 @@ Elements:
 * ``boot1 = cpu:rom://boot1``  
   1st stage bootloader is loaded from ROM stored internally to the CPU. 
   As this is Read Only Memory this stage is trusted.
-* ``kernel = boot1:decrypt(cpu:otp://key, flash://kernel_enc)``  
-  OS Kernel stored encrypted in flash and decrypted by 1st stage bootloader
-  software using a key stored in the CPU's One Time Programmable memory.
-* ``keystore = kernel:decrypt(cpu:otp://key, flash://keystore_enc)``  
-  A keystore is stored encrypted on flash and decrypted by OS Kernel using a
-  key stored in the CPU's One Time Programmable Memory.
-* ``filesys = kernel:decrypt(keystore://key, flash://filesys_enc)``  
-  Filesystem stored encrypted in flash and decrypted by OS kernel using a key
+* ``kernel = boot1:verify(cpu:otp://key, flash://kernel_sign)``  
+  OS Kernel stored in flash and verified by 1st stage bootloader software using 
+  a key stored in the CPU's One Time Programmable memory.
+* ``keystore = kernel:verifydecrypt(cpu:otp://key, flash://keystore_encsign)``  
+  A keystore is stored signed and encrypted on flash and decrypted and verified 
+  by OS Kernel using a key stored in the CPU's One Time Programmable Memory.
+* ``filesys = kernel:verify(keystore://key, flash://filesys_sign)``  
+  Filesystem stored in flash and verified by OS kernel using a key
   found in the keystore.
 * ``apps = filesys://applications``  
   Applications are loaded from the trusted fileystem.
@@ -97,9 +97,11 @@ each key.
      keystore = boot2:decrypt(cpu:otp://key, flash://keystore_enc)
       filesys = boot2:decrypt(keystore://key, flash://filesys_enc)
          apps = filesys://applications
-    ^^^^^^^^^^^^ trusted ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    vvvvvvvvvvvv untrusted vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+    ^^^^^^^^^^^^ hidden ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    vvvvvvvvvvvv clear vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
          conf = flash://conf
+
+Note: Encryption may provide secrecy but without authentication it should not be assumed to prevent modification.
 
 ### chainoftrust_signed.sbdl
 
@@ -122,7 +124,6 @@ each key.
      filesys = boot2:decrypt(cocpu:key_index, flash://filesys_enc)
         apps = filesys://applications
         conf = boot2:verify(cocpu:key_index, flash://conf_signed)
-    ^^^^^^^^^^^^ trusted ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ### chainoftrust_dmcrypt_verify.sbdl
 
@@ -135,22 +136,20 @@ each key.
       kernel = boot2:verify(cpu:otp://pubkey, flash://kernel)
      # uses linux dm-verify which auto verifies blocks as loaded
      filesys = kernel:dm-verify(cpu:otp://pubkey, flash://filesys)
-    ^^^^^^^^^^^^ trusted ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ^^^^^^^^^^^^ trusted ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ### chainoftrust_nxp-hab.sbdl
 
        boot1 = cpu:rom://boot1
        boot2 = boot1:decrypt(cpu:otp://key, flash://boot2_enc)
       kernel = boot2:decrypt(cpu:otp://key, flash://kernel_enc)
-    ^^^^^^^^^^^^ trusted ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    vvvvvvvvvvvv untrusted vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
      filesys = flash://filesystem
         apps = filesys://applications
 
 
 ## Contributions
 
-pull requests welcome.
+Pull requests welcome.
 
 ## Disclaimer
 
