@@ -49,7 +49,8 @@ stored internally to the CPU.
 
         boot1 = cpu:rom://boot1
        kernel = boot1:verify(cpu:otp://key, flash://kernel_sign)
-     keystore = kernel:verifydecrypt(cpu:otp://key, flash://keystore_encsign)
+     keystore = kernel:verify(cpu:otp://key, flash://keystore_encsign)
+                kernel:decrypt(cpu:otp://key, flash://keystore_encsign)
       filesys = kernel:verify(keystore://key, flash://filesys_sign)
          apps = filesys://applications
     ^^^^^^^^^^^^ trusted ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -69,7 +70,7 @@ Elements:
 * ``kernel = boot1:verify(cpu:otp://key, flash://kernel_sign)``  
   OS Kernel stored in flash and verified by 1st stage bootloader software using 
   a key stored in the CPU's One Time Programmable memory.
-* ``keystore = kernel:verifydecrypt(cpu:otp://key, flash://keystore_encsign)``  
+* ``keystore = kernel:verify`` and ``decrypt(cpu:otp://key, flash://keystore_encsign)``  
   A keystore is stored signed and encrypted on flash and decrypted and verified 
   by OS Kernel using a key stored in the CPU's One Time Programmable Memory.
 * ``filesys = kernel:verify(keystore://key, flash://filesys_sign)``  
