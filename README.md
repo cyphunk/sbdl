@@ -35,7 +35,7 @@ memory locations.
 This generalization language might obscure important details. For example missing 
 are  authentication modes and mac functions. Hopefully readers that find these 
 details important could help organize this language to suite their those needs.
-Additionally a glaring obmission in current draft is effectively representing 
+Additionally a glaring omission in current draft is effectively representing 
 design flaws that occur when decryption is assumed to equal authentication.
 
 ## Use 
