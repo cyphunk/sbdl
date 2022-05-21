@@ -152,7 +152,7 @@ Note: Encryption may provide secrecy but without authentication it should not be
 
 Pull requests welcome.
 
-* Thank you Jennifer Guerke for the in-depth discussions on issues with encrypted only firmwares and to Jakob Lell for writing about exactly this issue through example (see links in intro).
+* Thank you Jennifer Gehrke for the in-depth discussions on issues with encrypted only firmwares and to Jakob Lell for writing about exactly this issue through example (see links in intro).
 
 ## Disclaimer
 
