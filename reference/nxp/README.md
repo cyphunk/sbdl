@@ -31,9 +31,10 @@ NXP secure boot implementations references and some notes.
   "i.MX & Vybrid Security Vulnerability Errata - ERR010872, ERR010873"  
   > An Engineering Bulletin (EB00854) on possible mitigation strategies is available to impacted users and can be requested through your NXP field support team or distributor. 
 
-  Could not obtain EB00854 document. But attached to the NXP bulletin is additional information:
+  Could not obtain EB00854 document. But attached to the NXP bulletin is additional information:  
   https://community.nxp.com/servlet/JiveServlet/download/334996-3-406868/ERR010873_Secure_Boot_Vulnerability_Erratum_Preliminary_Rev0.pdf  
-  > There is no software workaround available to prevent this vulnerability for the affected devices because the vulnerability is in the Boot ROM which cannot be updated in the field. 
+  > There is no software workaround available to prevent this vulnerability for the affected devices because the vulnerability is in the Boot ROM which cannot be updated in the field.  
+
   https://community.nxp.com/servlet/JiveServlet/download/334996-3-406867/ERR010872_Secure_Boot_Vulnerability_Erratum_Preliminary_Rev0.pdf  
   > For the i.MX 6UltraLite and i.MX 6ULL devices, a customer programmable eFUSE is available to disable the SDP port,thereby completely preventing this vulnerability
 - It is possible to mitigate one or both of the 
